@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
+import './App.css'
 function App() {
   
   const fee_structure={
@@ -79,14 +79,21 @@ function App() {
   const {feeType, nationality, courses, levels,amount}= form;
   
   return (
-    <div className="container">
+    <div className="container mt-lg-5">
+
+    <div className="row">
+    <div className="col-lg-12 text-center">
+          <h1>Know Your Fees</h1>
+        </div>
+    </div>
       <div className="row">
+       
         <div className="col-lg12">  
         <form>
     <div className="form-group mt-4">
     
     <select name="feeType" value={feeType} className="form-control" id="exampleFormControlSelect1" onChange={e=>setForm({...form, [e.target.name]:e.target.value})}  required>
-    <option value="" selected disabled hidden> Select fee type</option>
+    <option value="" selected disabled hidden> Select Fee Type</option>
     {
       Object.keys(fee_structure).map((item)=>(<option>{item}</option>))
     }
@@ -102,7 +109,7 @@ function App() {
       
       
       <select name="nationality" value={nationality} className="form-control" id="exampleFormControlSelect1" onChange={e=>setForm({...form, [e.target.name]:e.target.value})} >
-      <option value="" selected disabled hidden> Select nationality</option>
+      <option value="" selected disabled hidden> Select Nationality</option>
       {
         Object.keys(fee_structure[feeType]).map((item)=>(<option>{item}</option>))
       }
@@ -114,7 +121,7 @@ function App() {
                 <div className="form-group mt-4">
              
               <select name="courses" value={courses} className="form-control" id="exampleFormControlSelect1" onChange={e=>setForm({...form, [e.target.name]:e.target.value})} >
-              <option value="" selected disabled hidden> Select courses</option>
+              <option value="" selected disabled hidden> Select Course</option>
               <option >Medical</option>
               <option >Dental</option>
               <option >Ayurveda</option>
@@ -129,7 +136,7 @@ function App() {
                         
                        
                         <select name="levels" value={levels} className="form-control" id="exampleFormControlSelect1" onChange={(e)=>setForm({...form, [e.target.name]:e.target.value, amount:feeType==="Exam Fee"? fee_structure[feeType][nationality]["ALL_COURSES"]["ALL_LEVEL"]["amount"]:fee_structure[feeType][nationality]["ALL_COURSES"][e.target.value]["amount"]})}  >
-                        <option value="" selected disabled hidden>Select Levels</option>
+                        <option value="" selected disabled hidden>Select Level</option>
                         {
                           feeType==="Application Fee" && nationality && courses?(
                             Object.keys(fee_structure[feeType][nationality]["ALL_COURSES"]).map((item)=>(<option>{item}</option>))
@@ -157,8 +164,9 @@ function App() {
           
           
           </form>
-          
-          <div className="col-lg-12 mt-3">
+          <br/>
+          <br />
+          <div className="col-lg-12 mt-3 text-center">
             {amount && ( <h1>The total fee amount is:{amount}</h1>)}
          
           
