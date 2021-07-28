@@ -80,11 +80,13 @@ function App() {
   
   return (
     <div className="container">
-    <form>
-    <div className="form-group">
-    <label >Select the Type of Fee</label>
-    <select name="feeType" value={feeType} className="form-control" id="exampleFormControlSelect1" onChange={e=>setForm({...form, [e.target.name]:e.target.value})} >
+      <div className="row">
+        <div className="col-lg12">  
+        <form>
+    <div className="form-group mt-4">
     
+    <select name="feeType" value={feeType} className="form-control" id="exampleFormControlSelect1" onChange={e=>setForm({...form, [e.target.name]:e.target.value})}  required>
+    <option value="" selected disabled hidden> Select fee type</option>
     {
       Object.keys(fee_structure).map((item)=>(<option>{item}</option>))
     }
@@ -95,12 +97,12 @@ function App() {
     
     </div>
     
-    {feeType?( <Fragment>
-      <div className="form-group">
+    {feeType && ( <Fragment>
+      <div className="form-group mt-4">
       
-      <label >Select Your Nationality</label>
+      
       <select name="nationality" value={nationality} className="form-control" id="exampleFormControlSelect1" onChange={e=>setForm({...form, [e.target.name]:e.target.value})} >
-      
+      <option value="" selected disabled hidden> Select nationality</option>
       {
         Object.keys(fee_structure[feeType]).map((item)=>(<option>{item}</option>))
       }
@@ -109,13 +111,13 @@ function App() {
       
         {nationality && 
               (<Fragment>
-                <div className="form-group">
-              <label >Select course</label>
-              <select name="courses" value={courses} className="form-control" id="exampleFormControlSelect1" onChange={e=>setForm({...form, [e.target.name]:'ALL_COURSES'})} >
-              
-              <option>Medical</option>
-              <option>Dental</option>
-              <option>Ayurveda</option>
+                <div className="form-group mt-4">
+             
+              <select name="courses" value={courses} className="form-control" id="exampleFormControlSelect1" onChange={e=>setForm({...form, [e.target.name]:e.target.value})} >
+              <option value="" selected disabled hidden> Select courses</option>
+              <option >Medical</option>
+              <option >Dental</option>
+              <option >Ayurveda</option>
               </select>
               
               
@@ -123,12 +125,14 @@ function App() {
               
               </div>
               {courses && 
-                    (<div className="form-group">
-                        <label >Select Level</label>
-                        <select name="levels" value={levels} className="form-control" id="exampleFormControlSelect1" onChange={(e)=>setForm({...form, [e.target.name]:e.target.value, amount:feeType==="Exam Fee"? fee_structure[feeType][nationality][courses]["ALL_LEVEL"]["amount"]:fee_structure[feeType][nationality][courses][e.target.value]["amount"]})}  >
+                    (<div className="form-group mt-4">
+                        
+                       
+                        <select name="levels" value={levels} className="form-control" id="exampleFormControlSelect1" onChange={(e)=>setForm({...form, [e.target.name]:e.target.value, amount:feeType==="Exam Fee"? fee_structure[feeType][nationality]["ALL_COURSES"]["ALL_LEVEL"]["amount"]:fee_structure[feeType][nationality]["ALL_COURSES"][e.target.value]["amount"]})}  >
+                        <option value="" selected disabled hidden>Select Levels</option>
                         {
                           feeType==="Application Fee" && nationality && courses?(
-                            Object.keys(fee_structure[feeType][nationality][courses]).map((item)=>(<option>{item}</option>))
+                            Object.keys(fee_structure[feeType][nationality]["ALL_COURSES"]).map((item)=>(<option>{item}</option>))
                             ):(<Fragment><option>UG</option>
                               <option>PG</option>
                               <option>DIPLOMA</option>
@@ -148,16 +152,20 @@ function App() {
       
      
           </Fragment>
-          ):(<p>Please select Fee type</p>)}
+          )}
           
           
           
           </form>
           
-          <div>
-          <p>The total fee amount is:{amount}</p>
+          <div className="col-lg-12 mt-3">
+            {amount && ( <h1>The total fee amount is:{amount}</h1>)}
+         
           
           </div>
+        </div>
+      </div>
+    
           
           </div>
           );
