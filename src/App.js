@@ -8,28 +8,33 @@ function App() {
       "INDIAN":{
         "ALL_COURSES":{
           "ALL_LEVEL":{
-            "amount":400
+            "amount":400,
+            "gst":18
           }
         }
       },
       "FOREIGN":{
         "ALL_COURSES":{
           "ALL_LEVEL":{
-            "amount":100
+            "amount":100,
+            "gst":28
           }
         }
       },
       "NRI":{
         "ALL_COURSES":{
           "ALL_LEVEL":{
-            "amount":600
+            "amount":600,
+            "gst":28
           }
         }
       },
       "SAARC":{
         "ALL_COURSES":{
           "ALL_LEVEL":{
-            "amount":600
+            "amount":600,
+            "gst":18
+
           }
         }
       }
@@ -38,26 +43,36 @@ function App() {
       "INDIAN":{
         "ALL_COURSES":{
           "UG":{
-            "amount":200
+            "amount":200,
+            "gst":18
+
           },
           "UG-DIPLOMA":{
-            "amount":300
+            "amount":300,
+            "gst":18
+
           },
           "PG":{
-            "amount":500
+            "amount":500,
+            "gst":18
+
           }
         }
       },
       "FOREIGN":{
         "ALL_COURSES":{
           "UG":{
-            "amount":400
+            "amount":400,
+            "gst":28
+
           },
           "UG-DIPLOMA":{
-            "amount":400
+            "amount":400,
+            "gst":28
           },
           "PG":{
-            "amount":700
+            "amount":700,
+            "gst":28
           }
         }
       }
@@ -92,7 +107,7 @@ function App() {
         <form>
     <div className="form-group mt-4">
     
-    <select name="feeType" value={feeType} className="form-control" id="exampleFormControlSelect1" onChange={e=>setForm({...form, [e.target.name]:e.target.value})}  required>
+    <select name="feeType" value={feeType} className="form-control" id="exampleFormControlSelect1" onChange={e=>setForm({[e.target.name]:e.target.value})}  required>
     <option value="" selected disabled hidden> Select Fee Type</option>
     {
       Object.keys(fee_structure).map((item)=>(<option>{item}</option>))
@@ -167,7 +182,13 @@ function App() {
           <br/>
           <br />
           <div className="col-lg-12 mt-3 text-center">
-            {amount && ( <h1>The total fee amount is:{amount}</h1>)}
+            {amount &&
+             ( <h1>The total fee amount is:{
+             amount + amount*(fee_structure[feeType][nationality]["ALL_COURSES"]["ALL_LEVEL"]["gst"]* 0.01)}
+             </h1>
+             )
+            }
+           
          
           
           </div>
